@@ -1,0 +1,22 @@
+# Use root/example as user/password credentials
+version: '3.1'
+
+services:
+  db:
+    container_name: mysql_inventory_db
+    image: mysql:8.0.31
+    volumes:
+      - dbbase:/var/lib/mysql
+    ports:
+      - "3307:3306"  
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: hotel_inventory_db
+
+  phpmyadmin:
+    image: phpmyadmin
+    ports:
+      - 8000:80
+
+volumes:
+  dbbase:
