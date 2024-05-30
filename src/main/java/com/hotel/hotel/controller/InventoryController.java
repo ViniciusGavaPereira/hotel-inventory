@@ -3,6 +3,7 @@ package com.hotel.hotel.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpStatus;
 
 import org.springframework.http.ResponseEntity;
@@ -17,7 +18,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.hotel.hotel.service.InventoryService;
 
+import exception.CustomApplicationException;
+
 import com.hotel.hotel.entities.Inventory;
+import org.springframework.web.bind.annotation.PutMapping;
 
 @Controller
 @RestController
@@ -35,7 +39,7 @@ public class InventoryController {
     @GetMapping(value = "{id}")
     public ResponseEntity<?> findById(@PathVariable Long id) {
         Inventory result = inventoryService.findById(id);
-        System.out.println(result);
+
         return new ResponseEntity<Inventory>(result, HttpStatus.OK);
 
     }
@@ -62,6 +66,19 @@ public class InventoryController {
     public ResponseEntity<?> deleteProduct(@PathVariable Long id) {
         inventoryService.deleteById(id);
         return new ResponseEntity<>(HttpStatus.ACCEPTED);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Inventory> updateProduct(@PathVariable long id, @RequestBody Inventory inventory) {
+
+        try {
+            inventoryService.updateInventory(id, inventory);
+            return new ResponseEntity<Inventory>(inventory, HttpStatus.OK);
+
+        } catch (EmptyResultDataAccessException e) {
+            throw new CustomApplicationException("Product not found", HttpStatus.NOT_FOUND);
+
+        }
     }
 
 }
