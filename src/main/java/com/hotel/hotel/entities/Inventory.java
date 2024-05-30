@@ -63,4 +63,12 @@ public class Inventory {
         this.cost = cost;
     }
 
+    public void addQuantity(int quant) {
+        this.quantity = quantity + quant;
+    }
+
+    public void removeQuantity(int quant) {
+        this.quantity = quantity - quant;
+    }
+
 }
