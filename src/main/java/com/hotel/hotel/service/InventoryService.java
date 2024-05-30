@@ -17,4 +17,14 @@ public class InventoryService {
     public List<Inventory> findAll() {
         return inventoryRepository.findAll();
     }
+
+    public Inventory findById(long id) {
+        return inventoryRepository.findById(id).get();
+    }
+
+    public List<Inventory> findByName(String name) {
+
+        return inventoryRepository.findByProductContaining(name);
+
+    }
 }
