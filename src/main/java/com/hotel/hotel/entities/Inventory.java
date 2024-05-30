@@ -25,8 +25,7 @@ public class Inventory {
     public Inventory() {
     }
 
-    public Inventory(Long id, String product, int quantity, float cost) {
-        this.id = id;
+    public Inventory(String product, int quantity, float cost) {
         this.product = product;
         this.quantity = quantity;
         this.cost = cost;

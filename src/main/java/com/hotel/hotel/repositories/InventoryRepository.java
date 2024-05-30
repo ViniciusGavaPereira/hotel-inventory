@@ -10,4 +10,5 @@ import com.hotel.hotel.entities.Inventory;
 public interface InventoryRepository extends JpaRepository<Inventory, Long> {
 
     List<Inventory> findByProductContaining(String product);
+
 }

@@ -27,4 +27,10 @@ public class InventoryService {
         return inventoryRepository.findByProductContaining(name);
 
     }
+
+    public void createProduct(String product, int quantity, float cost) {
+        Inventory inventory = new Inventory(product, quantity, cost);
+        inventoryRepository.save(inventory);
+    }
+
 }
