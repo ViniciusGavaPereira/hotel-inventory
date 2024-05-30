@@ -3,11 +3,11 @@ package com.hotel.hotel.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-
 import org.springframework.http.HttpStatus;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -50,12 +50,18 @@ public class InventoryController {
 
     @PostMapping(value = "/createproduct/v1/")
     public ResponseEntity<?> createProduct(@RequestBody Inventory inventoryInput) {
-        System.out.println("Entrou no projeto: " + inventoryInput);
-        Inventory inventory = new Inventory(inventoryInput.getProduct(),
-                inventoryInput.getQuantity(),
+
+        Inventory inventory = new Inventory(inventoryInput.getProduct(), inventoryInput.getQuantity(),
                 inventoryInput.getCost());
 
         inventoryService.createProduct(inventory.getProduct(), inventory.getQuantity(), inventory.getCost());
         return new ResponseEntity<Inventory>(inventory, HttpStatus.CREATED);
     }
+
+    @DeleteMapping(value = "/{id}")
+    public ResponseEntity<?> deleteProduct(@PathVariable Long id) {
+        inventoryService.deleteById(id);
+        return new ResponseEntity<>(HttpStatus.ACCEPTED);
+    }
+
 }
