@@ -20,6 +20,7 @@ import com.hotel.hotel.service.InventoryService;
 
 import exception.CustomApplicationException;
 
+import com.hotel.hotel.dto.InventoryDto;
 import com.hotel.hotel.entities.Inventory;
 import org.springframework.web.bind.annotation.PutMapping;
 
@@ -32,23 +33,25 @@ public class InventoryController {
     private InventoryService inventoryService;
 
     @GetMapping(value = "/all")
-    public List<Inventory> findAll() {
-        return inventoryService.findAll();
+    public List<InventoryDto> findAll() {
+
+        List<Inventory> result = inventoryService.findAll();
+        return InventoryDto.inventoryConverter(result);
     }
 
     @GetMapping(value = "{id}")
-    public ResponseEntity<?> findById(@PathVariable Long id) {
+    public ResponseEntity<InventoryDto> findById(@PathVariable Long id) {
         Inventory result = inventoryService.findById(id);
 
-        return new ResponseEntity<Inventory>(result, HttpStatus.OK);
+        return new ResponseEntity<InventoryDto>(new InventoryDto(result), HttpStatus.OK);
 
     }
 
     @GetMapping(value = "/product/{name}")
-    public ResponseEntity<?> findByName(@PathVariable String name) {
+    public ResponseEntity<List<InventoryDto>> findByName(@PathVariable String name) {
         List<Inventory> result = inventoryService.findByName(name);
-        System.out.println(result);
-        return new ResponseEntity<List<Inventory>>(result, HttpStatus.OK);
+
+        return new ResponseEntity<List<InventoryDto>>(InventoryDto.inventoryConverter(result), HttpStatus.OK);
 
     }
 
@@ -59,21 +62,22 @@ public class InventoryController {
                 inventoryInput.getCost());
 
         inventoryService.createProduct(inventory.getProduct(), inventory.getQuantity(), inventory.getCost());
-        return new ResponseEntity<Inventory>(inventory, HttpStatus.CREATED);
+        return new ResponseEntity<>("Product was ceated successffully:\n" + new InventoryDto(inventory).toString(),
+                HttpStatus.CREATED);
     }
 
     @DeleteMapping(value = "/{id}")
     public ResponseEntity<?> deleteProduct(@PathVariable Long id) {
         inventoryService.deleteById(id);
-        return new ResponseEntity<>(HttpStatus.ACCEPTED);
+        return new ResponseEntity<>("Product was deleted", HttpStatus.ACCEPTED);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Inventory> updateProduct(@PathVariable long id, @RequestBody Inventory inventory) {
+    public ResponseEntity<InventoryDto> updateProduct(@PathVariable long id, @RequestBody Inventory inventory) {
 
         try {
             inventoryService.updateInventory(id, inventory);
-            return new ResponseEntity<Inventory>(inventory, HttpStatus.OK);
+            return new ResponseEntity<InventoryDto>(new InventoryDto(inventory), HttpStatus.OK);
 
         } catch (EmptyResultDataAccessException e) {
             throw new CustomApplicationException("Product not found", HttpStatus.NOT_FOUND);

@@ -5,10 +5,6 @@ import java.util.stream.Collectors;
 
 import com.hotel.hotel.entities.Inventory;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-
 public class InventoryDto {
 
     private String product;
@@ -47,6 +43,11 @@ public class InventoryDto {
 
     public void setCost(float cost) {
         this.cost = cost;
+    }
+
+    @Override
+    public String toString() {
+        return "Product:" + product + "\nQuantity=" + quantity + "\nCost=" + cost;
     }
 
     public static List<InventoryDto> inventoryConverter(List<Inventory> products) {
