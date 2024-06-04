@@ -15,6 +15,7 @@ services:
 
   phpmyadmin:
     image: phpmyadmin
+    container_name: phpmyadmin-inventory
     depends_on:
       - db
     ports:
