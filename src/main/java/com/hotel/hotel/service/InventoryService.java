@@ -52,7 +52,7 @@ public class InventoryService {
 
         inventoryRepository.save(inventory);
 
-        return new Inventory();
+        return inventory;
 
     }
 
