@@ -15,11 +15,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
 import com.hotel.hotel.service.InventoryService;
-
 import exception.CustomApplicationException;
-
 import com.hotel.hotel.dto.InventoryDto;
 import com.hotel.hotel.entities.Inventory;
 import org.springframework.web.bind.annotation.PutMapping;
