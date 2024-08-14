@@ -9,14 +9,14 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "Orders")
-public class Order {
+public class Orders {
 
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     @Column(name = "OrderNumber")
-    private Integer OrderNumber;
+    private Integer orderNumber;
     @Column(name = "Product")
     private String product;
     @Column(name = "Price")
@@ -24,12 +24,12 @@ public class Order {
     @Column(name = "Quantity")
     private Integer quantity;
 
-    public Order() {
+    public Orders() {
     }
 
-    public Order(long id, Integer orderNumber, String product, float price, Integer quantity) {
+    public Orders(long id, Integer orderNumber, String product, float price, Integer quantity) {
         this.id = id;
-        OrderNumber = orderNumber;
+        this.orderNumber = orderNumber;
         this.product = product;
         this.price = price;
         this.quantity = quantity;
@@ -44,11 +44,11 @@ public class Order {
     }
 
     public Integer getOrderNumber() {
-        return OrderNumber;
+        return orderNumber;
     }
 
     public void setOrderNumber(Integer orderNumber) {
-        OrderNumber = orderNumber;
+        this.orderNumber = orderNumber;
     }
 
     public String getProduct() {
@@ -77,7 +77,7 @@ public class Order {
 
     @Override
     public String toString() {
-        return "Order [id=" + id + ", OrderNumber=" + OrderNumber + ", product=" + product + ", price=" + price
+        return "Order [id=" + id + ", OrderNumber=" + orderNumber + ", product=" + product + ", price=" + price
                 + ", quantity=" + quantity + "]";
     }
 
