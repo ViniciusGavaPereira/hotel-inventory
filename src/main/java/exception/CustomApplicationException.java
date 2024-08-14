@@ -30,4 +30,10 @@ public class CustomApplicationException extends RuntimeException {
         return httpStatus;
     }
 
+    public class EmptyListException extends RuntimeException {
+        public EmptyListException(String message) {
+            super(message);
+        }
+    }
+
 }

@@ -11,9 +11,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.hotel.hotel.dto.InventoryDto;
 import com.hotel.hotel.dto.OrdersDto;
-import com.hotel.hotel.entities.Inventory;
 import com.hotel.hotel.entities.Orders;
 import com.hotel.hotel.service.OrdersService;
 
@@ -39,4 +37,13 @@ public class OrdersController {
         return new ResponseEntity<OrdersDto>(new OrdersDto(result), HttpStatus.OK);
 
     }
+
+    @GetMapping(value = "/orderNumber/{orderNumber}")
+    public ResponseEntity<List<OrdersDto>> findByOrderNumber(@PathVariable Integer orderNumber) {
+        List<Orders> result = ordersService.findByOrderNumber(orderNumber);
+
+        return new ResponseEntity<List<OrdersDto>>(OrdersDto.ordersConverter(result), HttpStatus.OK);
+
+    }
+
 }

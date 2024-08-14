@@ -10,6 +10,7 @@ import com.hotel.hotel.entities.Orders;
 import com.hotel.hotel.repositories.OrdersRepository;
 
 import exception.CustomApplicationException;
+import exception.CustomApplicationException.EmptyListException;
 
 @Service
 public class OrdersService {
@@ -23,6 +24,17 @@ public class OrdersService {
 
     public Orders findById(Long id) {
         return ordersRepository.findById(id)
-                .orElseThrow(() -> new CustomApplicationException("Order not found", HttpStatus.NOT_FOUND));
+                .orElseThrow(() -> new CustomApplicationException("Id not found", HttpStatus.NOT_FOUND));
+    }
+
+    public List<Orders> findByOrderNumber(Integer orderNumber) {
+
+        try {
+            return ordersRepository.findByOrderNumber(orderNumber);
+
+        } catch (EmptyListException e) {
+            throw new CustomApplicationException("Order not found", HttpStatus.NOT_FOUND);
+        }
+
     }
 }
