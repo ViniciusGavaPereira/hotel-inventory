@@ -11,9 +11,13 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.hotel.hotel.dto.InventoryDto;
 import com.hotel.hotel.dto.OrdersDto;
+import com.hotel.hotel.entities.Inventory;
 import com.hotel.hotel.entities.Orders;
 import com.hotel.hotel.service.OrdersService;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 
 @Controller
 @RestController
@@ -44,6 +48,14 @@ public class OrdersController {
 
         return new ResponseEntity<List<OrdersDto>>(OrdersDto.ordersConverter(result), HttpStatus.OK);
 
+    }
+
+    @PostMapping("/save/")
+    public ResponseEntity<?> createOrder(@RequestBody Orders orders) {
+        Orders order = ordersService.createOrder(orders);
+
+        return new ResponseEntity<>("Order was ceated successffully:\n" + new OrdersDto(order).toString(),
+                HttpStatus.CREATED);
     }
 
 }

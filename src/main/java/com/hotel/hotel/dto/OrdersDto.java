@@ -68,4 +68,10 @@ public class OrdersDto {
         return products.stream().map(OrdersDto::new).collect(Collectors.toList());
     }
 
+    @Override
+    public String toString() {
+        return "Orders:\nId: " + id + "\nOrderNumber: " + OrderNumber + "\nProduct: " + product + "\nPrice: " + price
+                + "\nQuantity: " + quantity;
+    }
+
 }
