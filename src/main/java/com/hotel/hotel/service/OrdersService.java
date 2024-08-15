@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import com.hotel.hotel.dto.ScheduleDto;
+import com.hotel.hotel.entities.Inventory;
 import com.hotel.hotel.entities.Orders;
 import com.hotel.hotel.http.ScheduleClient;
 import com.hotel.hotel.repositories.OrdersRepository;
@@ -23,6 +24,9 @@ public class OrdersService {
 
     @Autowired
     private ScheduleClient scheduleClient;
+
+    @Autowired
+    private InventoryService inventoryService;
 
     public ScheduleDto findSchedule(Integer id) {
         ScheduleDto schedule = scheduleClient.findById(id);
@@ -53,6 +57,9 @@ public class OrdersService {
 
         // Connect to Schedule's endpoint
         findSchedule(orders.getFkIdSchedule());
+
+        // Verify if the endpoint exist's
+        inventoryService.findById(orders.getFkIdInventory());
 
         return ordersRepository.save(orders);
     }
