@@ -6,7 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
+import com.hotel.hotel.dto.ScheduleDto;
 import com.hotel.hotel.entities.Orders;
+import com.hotel.hotel.http.ScheduleClient;
 import com.hotel.hotel.repositories.OrdersRepository;
 
 import exception.CustomApplicationException;
@@ -18,6 +20,14 @@ public class OrdersService {
 
     @Autowired
     private OrdersRepository ordersRepository;
+
+    @Autowired
+    private ScheduleClient scheduleClient;
+
+    public ScheduleDto findSchedule(Integer id) {
+        ScheduleDto schedule = scheduleClient.findById(id);
+        return schedule;
+    }
 
     public List<Orders> findAll() {
         return ordersRepository.findAll();
@@ -40,6 +50,10 @@ public class OrdersService {
     }
 
     public Orders createOrder(Orders orders) {
+
+        // Connect to Schedule's endpoint
+        findSchedule(orders.getFkIdSchedule());
+
         return ordersRepository.save(orders);
     }
 

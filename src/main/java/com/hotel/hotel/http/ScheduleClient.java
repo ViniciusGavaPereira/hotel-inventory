@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.hotel.hotel.dto.ScheduleDto;
 
-@FeignClient("hotel-schedules-ms")
+@FeignClient(name = "hotel-schedules-ms")
 public interface ScheduleClient {
 
     @RequestMapping(method = RequestMethod.GET, value = "/schedule/id/{id}")
