@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
+import com.hotel.hotel.entities.Inventory;
 import com.hotel.hotel.entities.Orders;
 import com.hotel.hotel.repositories.OrdersRepository;
 
@@ -51,6 +52,21 @@ public class OrdersService {
     @Transactional
     public void deleteByOrderNumber(Integer orderNumber) {
         ordersRepository.deleteByOrderNumber(orderNumber);
+    }
+
+    @Transactional
+    public Orders updateOrder(long id, Orders orderInput) {
+        Orders orders = ordersRepository.findById(id)
+                .orElseThrow(() -> new CustomApplicationException("Order not found", HttpStatus.NOT_FOUND));
+
+        orders.setId(orderInput.getId());
+        orders.setProduct(orderInput.getProduct());
+        orders.setPrice(orderInput.getPrice());
+        orders.setQuantity(orderInput.getQuantity());
+
+        ordersRepository.save(orders);
+
+        return orders;
     }
 
 }

@@ -3,6 +3,7 @@ package com.hotel.hotel.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -12,11 +13,16 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.hotel.hotel.dto.InventoryDto;
 import com.hotel.hotel.dto.OrdersDto;
-
+import com.hotel.hotel.entities.Inventory;
 import com.hotel.hotel.entities.Orders;
 import com.hotel.hotel.service.OrdersService;
+
+import exception.CustomApplicationException;
+
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
 @Controller
@@ -56,6 +62,19 @@ public class OrdersController {
 
         return new ResponseEntity<>("Order was ceated successffully:\n" + new OrdersDto(order).toString(),
                 HttpStatus.CREATED);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<OrdersDto> updateProduct(@PathVariable long id, @RequestBody Orders order) {
+
+        try {
+            ordersService.updateOrder(id, order);
+            return new ResponseEntity<OrdersDto>(new OrdersDto(order), HttpStatus.OK);
+
+        } catch (EmptyResultDataAccessException e) {
+            throw new CustomApplicationException("Order not found", HttpStatus.NOT_FOUND);
+
+        }
     }
 
     @DeleteMapping(value = "/{id}")
