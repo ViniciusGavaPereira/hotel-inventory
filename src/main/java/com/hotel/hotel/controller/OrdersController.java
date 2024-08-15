@@ -6,14 +6,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.hotel.hotel.dto.InventoryDto;
 import com.hotel.hotel.dto.OrdersDto;
-import com.hotel.hotel.entities.Inventory;
+
 import com.hotel.hotel.entities.Orders;
 import com.hotel.hotel.service.OrdersService;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -56,6 +56,18 @@ public class OrdersController {
 
         return new ResponseEntity<>("Order was ceated successffully:\n" + new OrdersDto(order).toString(),
                 HttpStatus.CREATED);
+    }
+
+    @DeleteMapping(value = "/{id}")
+    public ResponseEntity<?> deleteById(@PathVariable Long id) {
+        ordersService.deleteById(id);
+        return new ResponseEntity<>("Order with id " + id + " was deleted", HttpStatus.ACCEPTED);
+    }
+
+    @DeleteMapping(value = "/deleteByOrderNumber/{orderNumber}")
+    public ResponseEntity<?> deleteByOrderNumber(@PathVariable Integer orderNumber) {
+        ordersService.deleteByOrderNumber(orderNumber);
+        return new ResponseEntity<>("Order with number " + orderNumber + " was deleted", HttpStatus.ACCEPTED);
     }
 
 }

@@ -11,6 +11,7 @@ import com.hotel.hotel.repositories.OrdersRepository;
 
 import exception.CustomApplicationException;
 import exception.CustomApplicationException.EmptyListException;
+import jakarta.transaction.Transactional;
 
 @Service
 public class OrdersService {
@@ -41,4 +42,15 @@ public class OrdersService {
     public Orders createOrder(Orders orders) {
         return ordersRepository.save(orders);
     }
+
+    public void deleteById(Long id) {
+
+        ordersRepository.deleteById(id);
+    }
+
+    @Transactional
+    public void deleteByOrderNumber(Integer orderNumber) {
+        ordersRepository.deleteByOrderNumber(orderNumber);
+    }
+
 }
