@@ -1,14 +1,12 @@
 package com.hotel.hotel.entities;
 
-import org.antlr.v4.runtime.misc.NotNull;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
-import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "Orders")
@@ -24,10 +22,10 @@ public class Orders {
     private float price;
     @Column(name = "Quantity")
     private Integer quantity;
-    @NotBlank
+    @NotNull
     @Column(name = "fkIdInventory")
     private int fkIdInventory;
-    @NotBlank
+    @NotNull
     @Column(name = "FkIdSchedule")
     private int fkIdSchedule;
 
