@@ -9,9 +9,10 @@ public class OrdersDto {
 
     private long id;
     private Integer OrderNumber;
-    private String product;
     private float price;
     private Integer quantity;
+    private int fkIdInventory;
+    private int fkIdSchedule;
 
     public OrdersDto() {
     }
@@ -19,9 +20,10 @@ public class OrdersDto {
     public OrdersDto(Orders orders) {
         id = orders.getId();
         OrderNumber = orders.getOrderNumber();
-        product = orders.getProduct();
         price = orders.getPrice();
         quantity = orders.getQuantity();
+        fkIdInventory = orders.getFkIdInventory();
+        fkIdSchedule = orders.getFkIdSchedule();
     }
 
     public long getId() {
@@ -38,14 +40,6 @@ public class OrdersDto {
 
     public void setOrderNumber(Integer orderNumber) {
         OrderNumber = orderNumber;
-    }
-
-    public String getProduct() {
-        return product;
-    }
-
-    public void setProduct(String product) {
-        this.product = product;
     }
 
     public float getPrice() {
@@ -68,10 +62,26 @@ public class OrdersDto {
         return products.stream().map(OrdersDto::new).collect(Collectors.toList());
     }
 
+    public int getFkIdInventory() {
+        return fkIdInventory;
+    }
+
+    public void setFkIdInventory(int fkIdInventory) {
+        this.fkIdInventory = fkIdInventory;
+    }
+
+    public int getFkIdSchedule() {
+        return fkIdSchedule;
+    }
+
+    public void setFkIdSchedule(int fkIdSchedule) {
+        this.fkIdSchedule = fkIdSchedule;
+    }
+
     @Override
     public String toString() {
-        return "Orders:\nId: " + id + "\nOrderNumber: " + OrderNumber + "\nProduct: " + product + "\nPrice: " + price
-                + "\nQuantity: " + quantity;
+        return "OrdersDto [id=" + id + ", OrderNumber=" + OrderNumber + ", price=" + price + ", quantity=" + quantity
+                + ", fkIdInventory=" + fkIdInventory + ", fkIdSchedule=" + fkIdSchedule + "]";
     }
 
 }

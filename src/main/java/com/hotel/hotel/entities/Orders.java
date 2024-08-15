@@ -1,11 +1,14 @@
 package com.hotel.hotel.entities;
 
+import org.antlr.v4.runtime.misc.NotNull;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import javax.validation.constraints.NotBlank;
 
 @Entity
 @Table(name = "Orders")
@@ -17,26 +20,31 @@ public class Orders {
     private long id;
     @Column(name = "OrderNumber")
     private Integer orderNumber;
-    @Column(name = "Product")
-    private String product;
     @Column(name = "Price")
     private float price;
     @Column(name = "Quantity")
     private Integer quantity;
+    @NotBlank
+    @Column(name = "fkIdInventory")
+    private int fkIdInventory;
+    @NotBlank
+    @Column(name = "FkIdSchedule")
+    private int fkIdSchedule;
 
     public Orders() {
     }
 
-    public Orders(long id, Integer orderNumber, String product, float price, Integer quantity) {
-        this.id = id;
-        this.orderNumber = orderNumber;
-        this.product = product;
-        this.price = price;
-        this.quantity = quantity;
-    }
-
     public long getId() {
         return id;
+    }
+
+    public Orders(long id, Integer orderNumber, float price, Integer quantity, int fkIdInventory, int fkIdSchedule) {
+        this.id = id;
+        this.orderNumber = orderNumber;
+        this.price = price;
+        this.quantity = quantity;
+        this.fkIdInventory = fkIdInventory;
+        this.fkIdSchedule = fkIdSchedule;
     }
 
     public void setId(long id) {
@@ -49,14 +57,6 @@ public class Orders {
 
     public void setOrderNumber(Integer orderNumber) {
         this.orderNumber = orderNumber;
-    }
-
-    public String getProduct() {
-        return product;
-    }
-
-    public void setProduct(String product) {
-        this.product = product;
     }
 
     public float getPrice() {
@@ -75,10 +75,26 @@ public class Orders {
         this.quantity = quantity;
     }
 
+    public int getFkIdInventory() {
+        return fkIdInventory;
+    }
+
+    public void setFkIdInventory(int fkIdInventory) {
+        this.fkIdInventory = fkIdInventory;
+    }
+
+    public int getFkIdSchedule() {
+        return fkIdSchedule;
+    }
+
+    public void setFkIdSchedule(int fkIdSchedule) {
+        this.fkIdSchedule = fkIdSchedule;
+    }
+
     @Override
     public String toString() {
-        return "Order [id=" + id + ", OrderNumber=" + orderNumber + ", product=" + product + ", price=" + price
-                + ", quantity=" + quantity + "]";
+        return "Orders [id=" + id + ", orderNumber=" + orderNumber + ", price=" + price + ", quantity=" + quantity
+                + ", fkIdInventory=" + fkIdInventory + ", fkIdSchedule=" + fkIdSchedule + "]";
     }
 
 }

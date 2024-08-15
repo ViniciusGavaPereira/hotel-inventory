@@ -13,9 +13,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.hotel.hotel.dto.InventoryDto;
 import com.hotel.hotel.dto.OrdersDto;
-import com.hotel.hotel.entities.Inventory;
 import com.hotel.hotel.entities.Orders;
 import com.hotel.hotel.service.OrdersService;
 
@@ -64,19 +62,22 @@ public class OrdersController {
                 HttpStatus.CREATED);
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<OrdersDto> updateProduct(@PathVariable long id, @RequestBody Orders order) {
-
-        try {
-            ordersService.updateOrder(id, order);
-            return new ResponseEntity<OrdersDto>(new OrdersDto(order), HttpStatus.OK);
-
-        } catch (EmptyResultDataAccessException e) {
-            throw new CustomApplicationException("Order not found", HttpStatus.NOT_FOUND);
-
-        }
-    }
-
+    /*
+     * @PutMapping("/{id}")
+     * public ResponseEntity<OrdersDto> updateProduct(@PathVariable long
+     * id, @RequestBody Orders order) {
+     * 
+     * try {
+     * ordersService.updateOrder(id, order);
+     * return new ResponseEntity<OrdersDto>(new OrdersDto(order), HttpStatus.OK);
+     * 
+     * } catch (EmptyResultDataAccessException e) {
+     * throw new CustomApplicationException("Order not found",
+     * HttpStatus.NOT_FOUND);
+     * 
+     * }
+     * }
+     */
     @DeleteMapping(value = "/{id}")
     public ResponseEntity<?> deleteById(@PathVariable Long id) {
         ordersService.deleteById(id);
