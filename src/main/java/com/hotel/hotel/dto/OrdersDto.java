@@ -58,10 +58,6 @@ public class OrdersDto {
         this.quantity = quantity;
     }
 
-    public static List<OrdersDto> ordersConverter(List<Orders> products) {
-        return products.stream().map(OrdersDto::new).collect(Collectors.toList());
-    }
-
     public int getFkIdInventory() {
         return fkIdInventory;
     }
@@ -82,6 +78,10 @@ public class OrdersDto {
     public String toString() {
         return "OrdersDto [id=" + id + ", OrderNumber=" + OrderNumber + ", price=" + price + ", quantity=" + quantity
                 + ", fkIdInventory=" + fkIdInventory + ", fkIdSchedule=" + fkIdSchedule + "]";
+    }
+
+    public static List<OrdersDto> ordersConverter(List<Orders> products) {
+        return products.stream().map(OrdersDto::new).collect(Collectors.toList());
     }
 
 }
